@@ -110,12 +110,13 @@ describe('Submitt button component', () => {
     var wrapper;
 
     beforeEach(() => {
+        wrapper = mount(<SignUpForm />);
         email = wrapper.find('#email');
         dob = wrapper.find('#dob');
         name = wrapper.find('#name');
         pass = wrapper.find('#password');
         passConf = wrapper.find('#passwordConf');
-        wrapper = mount(<SignUpForm />);
+        
     });
 
   // checks if button is disabled initialy  
@@ -147,5 +148,5 @@ describe('Submitt button component', () => {
     expect(wrapper.find('#submitButton').prop('disabled')).toEqual(false);
   });
 
-});
+})
 

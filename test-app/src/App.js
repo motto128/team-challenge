@@ -28,7 +28,7 @@ class App extends Component {
           To get started, sign up today for a free 30 day trial.
         </p>
         <div>
-          {this.state.success &&
+          {this.state.signInCheck &&
             <div className="alert alert-success" role="alert">You have successfully signed up</div>
           }
           <SignUpForm handleSubmit={this.handleSubmit}/>

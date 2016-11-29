@@ -4,15 +4,18 @@
   "private": true,
   "devDependencies": {
     "enzyme": "^2.6.0",
+    "jest-enzyme": "^2.0.0",
     "react-addons-test-utils": "^15.4.1",
     "react-scripts": "0.7.0",
     "sinon": "^1.17.6"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "moment": "^2.17.0",
     "react": "^15.4.1",
     "react-bootstrap": "^0.30.7",
-    "react-dom": "^15.4.1"
+    "react-dom": "^15.4.1",
+    "sinon": "^1.17.6"
   },
   "scripts": {
     "start": "react-scripts start",

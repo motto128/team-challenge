@@ -26,7 +26,7 @@ describe ('<EmailInput/> component', () =>{
 
   it('Invalid email scenario: should show error message', () => {
     const wrapper = shallow(<EmailInput value={'invalid email'} updateParent={update} />);
-    expect(wrapper.find('p').text()).toEqual('this is not a valid email address');
+    expect(wrapper.find('p').text()).toEqual('this is not a valid email address'); 
   })
 
 

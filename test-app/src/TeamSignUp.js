@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
@@ -199,9 +200,11 @@ class BirthdayInput extends React.Component {
 
     //check age range
     var d = new Date(); //today
+    
     d.setYear(d.getFullYear() - 13); //subtract 13 from the year
     var minTimestamp = d.getTime();
-    if(timestamp < minTimestamp){
+    if(timestamp > minTimestamp){
+    
       return {notOldEnough:true, isValid:false}
     }
 
@@ -249,13 +252,12 @@ class BirthdayInput extends React.Component {
   }
 }
 
-
 /**
  * A component representing a controlled input for a password confirmation
  */
 class PasswordConfirmationInput extends React.Component {
   validate(currentValue){
-    if(currentValue === '' || this.props.password === ''){ //check both entries
+    if(currentValue === '' || this.props.password !== currentValue){ //check both entries
       return {mismatched:true, isValid:false};
     }    
 
@@ -268,7 +270,7 @@ class PasswordConfirmationInput extends React.Component {
 
     //what to assign to parent's state
     var stateUpdate = {
-      'passConf': {
+      'passwordConf': {
         value:event.target.value,
         valid:isValid
       }
@@ -289,6 +291,9 @@ class PasswordConfirmationInput extends React.Component {
                 value={this.props.value}
                 onChange={(e) => this.handleChange(e)}
         />
+        {errors.required && 
+          <p className = "help-block error-missing">please re-enter your password</p>
+        }
         {errors.mismatched &&
           <p className="help-block error-mismatched">passwords don't match</p>
         }

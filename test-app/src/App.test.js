@@ -3,12 +3,23 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import sinon from 'sinon';
 import {shallow} from 'enzyme';
-import {EmailInput, RequiredInput} from './TeamSignUp.js';
+import {SignUpForm, EmailInput, RequiredInput} from './TeamSignUp.js';
+
+
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(<App />, div);
 });
+
+describe ('<SignUpForm/> component', () =>{
+
+  it('should check if the sign up button is disabled at first', () => {
+    const wrapper = shallow(<SignUpForm id='submitButton' disabled ='true' updateParent={update} />);
+    expect(wrapper.children().toEqual(true));
+  })
+})
+
 
 // Jorge's tests
 

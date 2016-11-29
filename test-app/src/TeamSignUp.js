@@ -40,7 +40,7 @@ class SignUpForm extends React.Component {
 
   render() {
     //if all fields are valid, button should be enabled
-    var buttonEnabled = (this.state.email.valid && this.state.name.valid && this.state.dob.isValid && this.state.password.valid);
+    var buttonEnabled = (this.state.email.valid && this.state.name.valid && this.state.dob.valid && this.state.password.valid);
 
     return (
       <form name="signupForm" onSubmit={(e) => this.handleSubmit(e)}>
@@ -81,13 +81,6 @@ class SignUpForm extends React.Component {
  * A component representing a controlled input for an email address
  */
 class EmailInput extends React.Component {
-  constructor(props){
-    super(props);
-    this.validate = this.validate.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.updateParent = this.props.updateParent;
-  }
-
   validate(currentValue){
     if(currentValue === ''){ //check presence
       return {missing: true, isValid: false}
@@ -115,7 +108,7 @@ class EmailInput extends React.Component {
       }
     };
 
-    this.updateParent(stateUpdate) //update parent state
+    this.props.updateParent(stateUpdate) //update parent state
   }
 
   render() {
@@ -151,15 +144,9 @@ class RequiredInput extends React.Component {
       return {required: true, isValid: false};
     }
 
-    var valid = /^[A-Za-z\s]+$/.test(currentValue);
-    if (!valid){
-      console.log("Not valid");
-      return {isValid:false};
-    }
-
-    return {isValid: true};
+    return {isValid: true}; //no errors
   }  
-   
+  
   handleChange(event){  
     //check validity (to inform parent)
     var isValid = this.validate(event.target.value).isValid;
@@ -174,8 +161,6 @@ class RequiredInput extends React.Component {
     this.props.updateParent(stateUpdate) //update parent state
   }
 
-  
-
   render() {
     var errors = this.validate(this.props.value); //need to validate again, but at least isolated
     var inputStyle = 'form-group';
@@ -188,7 +173,7 @@ class RequiredInput extends React.Component {
                 value={this.props.value}
                 onChange={(e) => this.handleChange(e)}
         />
-        {!errors.isValid &&
+        {errors &&
           <p className="help-block error-missing">{this.props.errorMessage}</p>
         }
       </div>

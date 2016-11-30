@@ -18,7 +18,6 @@ class SignUpForm extends React.Component {
     };
 
     this.updateState = this.updateState.bind(this); //bind for scope
-    //this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   //callback for updating the state with child information
@@ -30,23 +29,29 @@ class SignUpForm extends React.Component {
   handleReset(event) {
     console.log('Reset!');
     var emptyState = {};
-    this.setState(emptyState);
+    this.setState({
+      email:{value:'',valid:false}, 
+      name:{value:'',valid:false},
+      dob:{value:'',valid:false},
+      password:{value:'',valid:false},
+      passwordConf:{value:'',valid:false}
+    });
   }
 
- /* //callback for the submit button
+ //callback for the submit button
   handleSubmit(event) {
     event.preventDefault();
     console.log('Submitted!');
-    this.props.submitCallback(this.state.email.valid && this.state.name.valid && this.state.dob.valid && this.state.password.valid && this.state.passwordConf.valid);
+    this.props.submitCallback(this.state);
   }
-  */
+  
 
   render() {
     //if all fields are valid, button should be enabled
     var buttonEnabled = (this.state.email.valid && this.state.name.valid && this.state.dob.valid && this.state.password.valid);
 
     return (
-      <form name="signupForm" onSubmit={(e) => this.props.handleSubmit(e)}>
+      <form name="signupForm" onSubmit={(e) => this.handleSubmit(e)}>
 
         <EmailInput value={this.state.email.value} updateParent={this.updateState} />
 
@@ -129,7 +134,7 @@ class EmailInput extends React.Component {
         {errors.missing &&
           <p className="help-block error-missing">we need to know your email address</p>
         }
-        {errors.invalid &&
+        {errors.invalidEmail &&
           <p className="help-block error-invalid">this is not a valid email address</p>
         }
       </div>
@@ -172,11 +177,11 @@ class RequiredInput extends React.Component {
     return (
       <div className={inputStyle}>
         <label htmlFor={this.props.field}>{this.props.label}</label>
-        <input type={this.props.type} id={this.props.id} name={this.props.field}className="form-control" placeholder={this.props.placeholder}
+        <input type={this.props.type} id={this.props.id} name={this.props.field} className="form-control" placeholder={this.props.placeholder}
                 value={this.props.value}
                 onChange={(e) => this.handleChange(e)}
         />
-        {errors &&
+        {!errors.isValid &&
           <p className="help-block error-missing">{this.props.errorMessage}</p>
         }
       </div>
@@ -259,7 +264,7 @@ class BirthdayInput extends React.Component {
  */
 class PasswordConfirmationInput extends React.Component {
   validate(currentValue){
-    if(currentValue === '' || this.props.password !== currentValue){ //check both entries
+    if(this.props.password !== currentValue){ //check both entries
       return {mismatched:true, isValid:false};
     }    
 

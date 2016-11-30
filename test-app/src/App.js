@@ -7,12 +7,11 @@ class App extends Component {
     this.state = {
       signInCheck: false
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.submitCallback = this.submitCallback.bind(this);
   }
 
   // If all the submitions are valid it will set signInCheck to true for display 
-  handleSubmit(event) {
-    event.preventDefault();
+  submitCallback(event) {
     this.setState({
       signInCheck: true
     });
@@ -31,7 +30,7 @@ class App extends Component {
           {this.state.signInCheck &&
             <div className="alert alert-success" role="alert">You have successfully signed up</div>
           }
-          <SignUpForm handleSubmit={this.handleSubmit}/>
+          <SignUpForm submitCallback={this.submitCallback}/>
         </div>
       </div>
     );

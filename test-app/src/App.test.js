@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import {BirthdayInput,PasswordConfirmationInput} from './TeamSignUp';
 import sinon from 'sinon';
 import {shallow, mount} from 'enzyme';
-import SignUpForm, {EmailInput, RequiredInput} from './TeamSignUp.js';
+import SignUpForm, {EmailInput, RequiredInput, BirthdayInput,PasswordConfirmationInput} from './TeamSignUp';
 
 
 it('renders without crashing', () => {
@@ -52,11 +51,25 @@ describe('<PasswordConfirmationInput /> component', () => {
     });
 })
 
-describe ('<SignUpForm/> component', () =>{
+describe ('Reset button component', () =>{
 
-  it('should check if the sign up button is disabled at first', () => {
-    const wrapper = shallow(<SignUpForm id='submitButton' disabled ='true' updateParent={update} />);
-    expect(wrapper.children().toEqual(true));
+  it('should check if the reset button return blank values', () => {
+    const wrapper = shallow(<SignUpForm />);
+
+     wrapper.setState({
+      email: { value: 'a@a.com' },
+      name: { value: 'bob' },
+      dob: { value: '11/11/1960' },
+      password: { value: '123456' },
+      passwordConf: { value: '123456' }
+    });
+
+    wrapper.find('#resetButton').simulate('click');
+    expect(wrapper.state().email.value).toEqual('');
+    expect(wrapper.state().name.value).toEqual('');
+    expect(wrapper.state().dob.value).toEqual('');
+    expect(wrapper.state().password.value).toEqual('');
+    expect(wrapper.state().passwordConf.value).toEqual('');
   })
 })
 
